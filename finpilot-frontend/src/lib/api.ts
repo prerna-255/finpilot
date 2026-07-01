@@ -143,17 +143,21 @@ class ApiClient {
   // Upload
   upload = {
     statement: (file: File, onProgress?: (pct: number) => void) => {
-      const formData = new FormData();
-      formData.append("file", file);
-      this.client.post("/uploads", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-        onUploadProgress: (e) => {
-          if (onProgress && e.total) {
-            onProgress(Math.round((e.loaded * 100) / e.total));
-          }
-        },
-      });
+  const formData = new FormData();
+  formData.append("file", file);
+
+  return this.client.post("/uploads", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
     },
+    onUploadProgress: (e) => {
+      if (onProgress && e.total) {
+        onProgress(Math.round((e.loaded * 100) / e.total));
+      }
+    },
+  });
+},
+      
     history: () => this.client.get("/upload/history"),
     delete: (id: string) => this.client.delete(`/upload/${id}`),
   };

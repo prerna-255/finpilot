@@ -35,15 +35,19 @@ export default function UploadPage() {
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const uploadMutation = useMutation({
-  mutationFn: ({
+  const uploadMutation = useMutation<
+  any,
+  Error,
+  { file: File; uploadId: string }
+>({
+  mutationFn: async ({
   file,
   uploadId,
 }: {
   file: File;
   uploadId: string;
-}) =>
-  api.upload.statement(file, (progress) => {
+}) => {
+  return await api.upload.statement(file, (progress) => {
     setFiles((prev) =>
       prev.map((f) =>
         f.id === uploadId
@@ -54,8 +58,8 @@ export default function UploadPage() {
           : f
       )
     );
-  }),
-
+  });
+},
   onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: ["transactions"] });
     queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
