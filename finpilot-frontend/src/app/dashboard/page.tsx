@@ -2,14 +2,27 @@
 import { useAuthStore } from "@/store/authStore";
 import { motion } from "framer-motion";
 import {
-  TrendingUp, TrendingDown, DollarSign, PiggyBank, Shield,
-  AlertTriangle, ArrowUpRight, ArrowDownRight, CreditCard, Zap
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
+  PiggyBank,
+  Shield,
+  Zap,
 } from "lucide-react";
 import {
-  AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
+  AreaChart,
+  Area,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
 } from "recharts";
-import { formatCurrency, formatPercent } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
 // Mock data — replace with React Query calls in production
@@ -198,15 +211,15 @@ const insights = data?.data?.insights ?? [];
                 paddingAngle={3}
                 dataKey="value"
               >
-                {categories.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
+                {categories.map((entry: any, index: number) => (
+  <Cell key={`cell-${index}`} fill={entry.color} />
+))}
               </Pie>
               <Tooltip formatter={(value: number) => [`₹${value.toLocaleString("en-IN")}`, ""]} />
             </PieChart>
           </ResponsiveContainer>
           <div className="mt-4 space-y-2">
-            {categories.slice(0, 4).map((cat) => (
+            {categories.slice(0, 4).map((cat: any) => (
               <div key={cat.name} className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full" style={{ background: cat.color }} />
                 <span className="flex-1 text-xs text-muted-foreground">{cat.name}</span>
@@ -226,7 +239,7 @@ const insights = data?.data?.insights ?? [];
             <button className="text-xs text-brand-600 hover:underline">View all</button>
           </div>
           <div className="space-y-3">
-            {transactions.map((tx) => (
+            {transactions.map((tx: any) => (
               <div key={tx.id} className="flex items-center gap-3 rounded-xl p-2.5 hover:bg-accent transition-colors">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted text-lg">
                   {tx.icon}
@@ -252,7 +265,7 @@ const insights = data?.data?.insights ?? [];
             </span>
           </div>
           <div className="space-y-3">
-            {insights.map((insight, i) => (
+            {insights.map((insight: any, i: number) => (
               <div
                 key={i}
                 className={`flex items-start gap-3 rounded-xl border p-3 text-sm ${
