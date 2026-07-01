@@ -40,6 +40,8 @@ const MOCK_RECURRING = [
   { name: "Gym Membership", amount: 1500, frequency: "Monthly", nextDate: "5th Feb" },
   { name: "Adobe Creative Cloud", amount: 1675, frequency: "Monthly", nextDate: "20th Feb" },
 ];
+ 
+
 
 export default function AnalyticsPage() {
   const [period, setPeriod] = useState<typeof PERIODS[number]>("30D");
@@ -138,30 +140,15 @@ const heatmap = (heatmapData as any)?.data ?? [];
       <div className="rounded-2xl border border-border bg-card p-6">
         <h3 className="mb-6 font-semibold">Top Merchants (Treemap)</h3>
         <ResponsiveContainer width="100%" height={260}>
-          <Treemap
-            data={merchants.map((m: any) => ({
-              name: m.merchant,
-          value: m.amount,
-          count: m.count,
-          }))}
-            dataKey="value"
-            stroke="hsl(var(--card))"
-            fill="#4f46e5"
-            content={({ x, y, width, height, name, value, index }: any) => {
-              const colors = ["#4f46e5", "#6366f1", "#818cf8", "#a5b8fc", "#10b981", "#f59e0b"];
-              return (
-                <g>
-                  <rect x={x} y={y} width={width} height={height} fill={colors[index % colors.length]} rx={8} />
-                  {width > 60 && height > 30 && (
-                    <>
-                      <text x={x + 8} y={y + 18} fill="#fff" fontSize={12} fontWeight={600}>{name}</text>
-                      <text x={x + 8} y={y + 34} fill="#fff" fontSize={11} opacity={0.85}>₹{value?.toLocaleString("en-IN")}</text>
-                    </>
-                  )}
-                </g>
-              );
-            }}
-          />
+        <Treemap
+  data={merchants.map((m: any) => ({
+    name: m.merchant,
+    value: m.amount,
+  }))}
+  dataKey="value"
+  stroke="hsl(var(--card))"
+  fill="#4f46e5"
+/>
         </ResponsiveContainer>
       </div>
 
